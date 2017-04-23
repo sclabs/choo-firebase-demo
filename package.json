@@ -5,9 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "budo src/app.js --live --open",
-    "build": "browserify src/app.js -g [envify --NODE_ENV 'production'] -t [ babelify --presets [ es2015 ] ] | uglifyjs -c -m -o dist/bundle.js"
+    "build": "browserify src/app.js -g [envify --NODE_ENV 'production'] -t [ babelify --presets [ es2015 ] ] -t [ unassertify ] | uglifyjs -c -m -o dist/bundle.js"
   },
-  "keywords": ["choo", "firebase", "demo"],
+  "keywords": [
+    "choo",
+    "firebase",
+    "demo"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sclabs/choo-firebase-demo.git"
@@ -25,6 +29,7 @@
     "browserify": "14.3.0",
     "budo": "9.4.7",
     "envify": "4.0.0",
-    "uglify": "0.1.5"
+    "uglify": "0.1.5",
+    "unassertify": "2.0.4"
   }
 }
