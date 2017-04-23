@@ -47,6 +47,15 @@ module.exports = {
             todosRef.child(auth.getUid()).on('value', snapshot => {
                 send('todos:receiveTodos', {data: snapshot.val()}, done);
             });
+        },
+        removeCompleted: (state, data, send, done) => {
+            const updates = {};
+            for (let i=0; i < state.todos.length; i++) {
+                if (state.todos[i].completed) {
+                    updates[state.todos[i].id] = null;
+                }
+            }
+            todosRef.child(auth.getUid()).update(updates);
         }
     }
 };

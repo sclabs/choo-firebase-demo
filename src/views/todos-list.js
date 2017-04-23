@@ -8,29 +8,34 @@ module.exports = (state, auth, send) => {
     }
     return html`
     <div>
-      <form onsubmit=${onSubmit}>
+      <form onsubmit=${submit}>
         <input type="text" placeholder="New item" id="title">
       </form>
       <ul>
         ${state.todos.map((todo) => {
             return html`
             <li>
-              <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id=${todo.id} onchange=${onChange}/>
+              <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id=${todo.id} onchange=${update}/>
               ${todo.title}
             </li>`
         })}
       </ul>
+      <button onclick=${removeCompleted}>Remove completed tasks</button>
     </div>`;
 
-    function onSubmit(e) {
+    function submit(e) {
         const input = e.target.children[0];
         send('todos:addTodo', {title: input.value, completed: false, uid: auth.uid});
         input.value = '';
         e.preventDefault();
     }
 
-    function onChange(e) {
+    function update(e) {
         const updates = {completed: e.target.checked};
         send('todos:updateTodo', {id: e.target.getAttribute('data-id'), updates: updates});
+    }
+
+    function removeCompleted(e) {
+        send('todos:removeCompleted');
     }
 };
