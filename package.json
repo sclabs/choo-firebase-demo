@@ -4,7 +4,7 @@
   "description": "a tech demo/sandbox for a choo.js webapp backed by firebase",
   "main": "index.js",
   "scripts": {
-    "start": "budo src/app.js --live --open",
+    "start": "budo src/app.js --live --open --css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
     "build": "browserify src/app.js -g [envify --NODE_ENV 'production'] -t [ babelify --presets [ es2015 ] ] -t [ unassertify ] | uglifyjs -c -m -o dist/bundle.js"
   },
   "keywords": [

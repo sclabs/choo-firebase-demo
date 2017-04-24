@@ -17,8 +17,11 @@ module.exports = (state, auth, send) => {
             <li>
               <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id=${todo.id} onchange=${update}/>
               ${todo.title}
+              <i class="fa fa-pencil-square-o" data-id=${todo.id}></i>
+              <i class="fa fa-close" data-id=${todo.id} onclick=${remove}></i>
             </li>`
         })}
+        ${state.todos.length === 0 ? 'Nothing to do!' : ''}
       </ul>
       <button onclick=${removeCompleted}>Remove completed tasks</button>
     </div>`;
@@ -37,5 +40,9 @@ module.exports = (state, auth, send) => {
 
     function removeCompleted(e) {
         send('todos:removeCompleted');
+    }
+
+    function remove(e) {
+        send('todos:removeTodo', {id: e.target.getAttribute('data-id')});
     }
 };

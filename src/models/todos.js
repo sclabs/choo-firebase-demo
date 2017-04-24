@@ -19,6 +19,10 @@ module.exports = {
     reducers: {
         // total overwrite of the state, the only low-level operation we will ever need
         receiveTodos: (state, data) => {
+            // short-circuit if there are no todos
+            if (!data.data) {
+                return {todos: []};
+            }
             // data.data is an object whose keys are the id's, to solve this we use this funny map
             const todos = Object.entries(data.data).map((pair) => {
                 const id = pair[0];
@@ -47,6 +51,11 @@ module.exports = {
             todosRef.child(auth.getUid()).on('value', snapshot => {
                 send('todos:receiveTodos', {data: snapshot.val()}, done);
             });
+        },
+        removeTodo: (state, data, send, done) => {
+            const updates = {};
+            updates[data.id] = null;
+            todosRef.child(auth.getUid()).update(updates);
         },
         removeCompleted: (state, data, send, done) => {
             const updates = {};
